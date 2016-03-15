@@ -24,9 +24,11 @@ import java.util.HashMap;
 public class Login extends Activity {
     private EditText log_et_username;
     private EditText log_et_password;
+    private EditText log_et_ming;
 
     private String log_st_usernmae;
     private String log_st_password;
+    private String log_st_ming;
 
     private boolean isLogin = false;
     private SharedPreferences sp_user;
@@ -37,7 +39,7 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login);
         initData();
-        if (isLogin ) {
+        if (isLogin) {
             startActivity(new Intent(Login.this, MainActivity.class));
             finish();
         }
@@ -54,8 +56,10 @@ public class Login extends Activity {
 
         log_st_usernmae = sp_user.getString("username", "");
         log_st_password = sp_user.getString("password", "");
+        log_st_ming = sp_user.getString("ming", "");
         MyData.UserName = log_st_usernmae;
         MyData.PassWord = log_st_password;
+        MyData.Ming = log_st_ming;
     }
 
     protected void initParams() {
@@ -63,6 +67,8 @@ public class Login extends Activity {
 
         log_et_username = (EditText) findViewById(R.id.log_et_username1);
         log_et_password = (EditText) findViewById(R.id.log_et_password1);
+        log_et_ming = (EditText) findViewById(R.id.log_et_ming);
+        log_et_ming.setText(log_st_ming);
         log_et_password.setText(log_st_password);
         log_et_username.setText(log_st_usernmae);
     }
@@ -77,6 +83,7 @@ public class Login extends Activity {
                 HashMap<String, Object> map = new HashMap<String, Object>();
                 map.put("zhang", log_st_usernmae);
                 map.put("mi", log_st_password);
+                map.put("ming", log_st_ming);
                 mhandler.obtainMessage(1, HttpUtils.updata(map, MyData.URL_reg)).sendToTarget();
             }
         }).start();
@@ -95,10 +102,12 @@ public class Login extends Activity {
                             SharedPreferences.Editor editor = sp_user.edit();
                             editor.putString("username", log_st_usernmae);
                             editor.putString("password", log_st_password);
+                            editor.putString("ming", log_st_ming);
                             editor.putBoolean("login", true);
                             editor.commit();
                             MyData.UserName = log_st_usernmae;
                             MyData.PassWord = log_st_password;
+                            MyData.Ming = log_st_ming;
                             MyData.Login = true;
                             startActivity(new Intent(Login.this, MainActivity.class));
                             finish();
@@ -119,6 +128,7 @@ public class Login extends Activity {
     public void checkLogin(View view) {
         log_st_usernmae = log_et_username.getText().toString();
         log_st_password = log_et_password.getText().toString();
+        log_st_ming = log_et_ming.getText().toString();
         if (log_st_usernmae != null && !log_st_usernmae.equals("")) {
             if (log_st_password != null && !log_st_password.equals("")) {
                 doLogin();

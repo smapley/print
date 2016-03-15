@@ -9,6 +9,7 @@ public class MyData {
 
     public static String UserName;
     public static String PassWord;
+    public static String Ming;
     public static boolean Login = false;
 
     private static final String BASE_URL = "http://120.25.208.188/dayin/";
