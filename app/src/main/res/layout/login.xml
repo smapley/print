@@ -14,7 +14,7 @@
         android:layout_height="50dp"
         android:layout_above="@+id/log_et_password1"
         android:layout_centerHorizontal="true"
-        android:hint="用户名1"
+        android:hint="用户名"
         android:inputType="text"
         android:maxLength="20"
         android:minLines="8" />
@@ -23,42 +23,20 @@
         android:id="@+id/log_et_password1"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_above="@+id/log_et_username2"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:hint="密码1"
-        android:inputType="textPassword"
-        android:maxLength="20"
-        android:minLines="8" />
-
-    <EditText
-        android:id="@+id/log_et_username2"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
         android:layout_centerInParent="true"
-        android:layout_marginTop="10dp"
-        android:hint="用户名2"
-        android:inputType="text"
-        android:maxLength="20"
-        android:minLines="8" />
-
-    <EditText
-        android:id="@+id/log_et_password2"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
         android:layout_marginTop="5dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/log_et_username2"
-        android:hint="密码2"
+        android:hint="密码"
         android:inputType="textPassword"
         android:maxLength="20"
         android:minLines="8" />
+
+
 
     <Button
         android:id="@+id/log_bt_submit"
         android:layout_width="200dp"
         android:layout_height="50dp"
-        android:layout_below="@+id/log_et_password2"
+        android:layout_below="@+id/log_et_password1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:onClick="checkLogin"
