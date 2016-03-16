@@ -124,6 +124,7 @@ public class Set extends Fragment {
                         editor.putBoolean("login", false);
                         editor.commit();
                         MyData.Login=false;
+                        MyData.RenZheng=false;
                         startActivity(new Intent(getActivity(), Login.class));
                         getActivity().finish();
                         break;

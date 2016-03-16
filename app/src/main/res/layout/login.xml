@@ -64,19 +64,10 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/chengse_select"
             android:onClick="checkLogin"
-            android:text="注册/登陆"
+            android:text="登陆"
             android:textSize="18sp"
             android:textColor="@color/white" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/log_bt_submit"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="10dp"
-            android:text="免责声明：本工具为私人订制用于实现打印网页数据，免费使用，仅供学习交流，违者后果自负。"
-            android:textColor="@color/red" />
+
     </LinearLayout>
 
 

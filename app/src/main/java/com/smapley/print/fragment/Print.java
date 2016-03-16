@@ -100,7 +100,6 @@ public class Print extends Fragment implements View.OnClickListener {
     private static Map<String, String> baseMap = new HashMap<>();
     private SharedPreferences sp_user;
 
-    private String title = "已用：";
     private String yyed = "";
     public String qishu = "";
 
@@ -206,7 +205,7 @@ public class Print extends Fragment implements View.OnClickListener {
         title_user.setText(MyData.UserName);
         title_user.setOnClickListener(this);
         tv_title1.setText("明细");
-        tv_title2.setText(title + yyed);
+        tv_title2.setText(yyed);
         tv_title3.setText("打印");
         tv_title1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -560,7 +559,7 @@ public class Print extends Fragment implements View.OnClickListener {
                         if (Integer.parseInt(map1.get("count").toString()) > 0) {
                             qishu = map1.get("qishu").toString();
                             yyed = map1.get("yyed1").toString();
-                            tv_title2.setText(title + yyed);
+                            tv_title2.setText(yyed);
                             List<Map<String, String>> list = JSON.parseObject(map1.get("result").toString(), new TypeReference<List<Map<String, String>>>() {
                             });
                             dataList.clear();
@@ -575,7 +574,7 @@ public class Print extends Fragment implements View.OnClickListener {
                             dataList.add(baseMap);
                             adapter.notifyDataSetChanged();
                             yyed = map1.get("yyed1").toString();
-                            tv_title2.setText(title + yyed);
+                            tv_title2.setText(yyed);
                             qishu = map1.get("qishu").toString();
                         }
 
@@ -585,6 +584,16 @@ public class Print extends Fragment implements View.OnClickListener {
 
                         Map map = JSON.parseObject(msg.obj.toString(), new TypeReference<Map>() {
                         });
+                        try {
+                            List<Map<String, String>> list2 = JSON.parseObject(map.get("tingya").toString(), new TypeReference<List<Map<String, String>>>() {
+                            });
+                            dataList1.clear();
+                            dataList1.addAll(list2);
+                            adapter1.notifyDataSetChanged();
+                            listView1.smoothScrollToPosition(adapter1.getCount() - 1);
+                        } catch (Exception e) {
+
+                        }
                         if (Integer.parseInt(map.get("count").toString()) > 0) {
                             List<Map> list = JSON.parseObject(map.get("result").toString(), new TypeReference<List<Map>>() {
                             });
@@ -599,12 +608,14 @@ public class Print extends Fragment implements View.OnClickListener {
                                 dataMap.put("gold", resultmap.get("gold").toString());
                                 dataMap.put("pei", resultmap.get("pei").toString());
                                 dataMap.put("id", resultmap.get("id").toString());
+                                dataMap.put("biaoshi",resultmap.get("biaoshi").toString());
                                 dataMap.put("hotstat", "0");
                                 dataList.add(dataMap);
                             }
                             adapter.notifyDataSetChanged();
                             listView.smoothScrollToPosition(adapter.getCount() - 1);
                         }
+
                         List<Map<String, String>> list1 = JSON.parseObject(map.get("disresult").toString(), new TypeReference<List<Map<String, String>>>() {
                         });
                         String result = "";

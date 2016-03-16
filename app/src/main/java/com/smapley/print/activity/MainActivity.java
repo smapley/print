@@ -69,6 +69,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     private final int UPDATA3 = 5;
     private final int CONNECTBT = 10;
     private final int CANUPDATA = 11;
+    private final int CHONGFU = 12;
     private static final int PRINT = 3;
     public static Dialog dialog;
     private Map map;
@@ -77,6 +78,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private static String title2;
     public static int position = 1;
+
+    public static int chongfuNum = 0;
 
 
     @Override
@@ -101,13 +104,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         new ThreadSleep().isLoop().sleep(180000, new ThreadSleep.Callback() {
             @Override
             public void onCallback(ThreadSleep threadSleep, int number) {
-                HashMap map = new HashMap();
-                map.put("user1", MyData.UserName);
                 if (MyData.RenZheng)
-                    HttpUtils.updata(map, MyData.URL_chongfu);
+                    chongfu();
             }
         });
     }
+
+    private void chongfu() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                HashMap map = new HashMap();
+                map.put("user1", MyData.UserName);
+                mhandler.obtainMessage(CHONGFU, HttpUtils.updata(map, MyData.URL_chongfu)).sendToTarget();
+            }
+        }).start();
+    }
+
 
     private void initView() {
 
@@ -139,6 +152,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentList.add(set);
         pageViewAdapter = new Main_Viewpage_Adapter(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(pageViewAdapter);
+        viewPager.setOffscreenPageLimit(4);
 
 
     }
@@ -299,6 +313,27 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             builder.setTitle(R.string.dialog_item1);
             try {
                 switch (msg.what) {
+                    case CHONGFU:
+                        int result0 = JSON.parseObject(msg.obj.toString(), new TypeReference<Integer>() {
+                        });
+                        if (result0 <= 0) {
+                            chongfuNum++;
+                            if(chongfuNum<4){
+                                chongfu();
+                            }else{
+                                AlertDialog.Builder builder1=new AlertDialog.Builder(MainActivity.this);
+                                builder1.setMessage("对接失败，请在网页中退出重新登录");
+                                builder1.setNegativeButton("确定",null);
+                                builder1.create().show();
+                                MyData.RenZheng = false;
+                            }
+
+                        }else{
+                            chongfuNum=0;
+                            MyData.RenZheng=true;
+                        }
+
+                        break;
                     case CANUPDATA:
                         if (print.dataList.size() > 1) {
                             upData(true, MyData.URL_GETJILU1);

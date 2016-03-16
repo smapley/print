@@ -57,7 +57,7 @@ public class TingyYaAdapter extends BaseAdapter {
         }
 
 
-        viewHolder.num.setText(map.get("tingya"));
+        viewHolder.num.setText(map.get("number"));
         try{
             if(map.get("yanse").toString().equals("1")){
                 viewHolder.num.setTextColor(Color.RED);

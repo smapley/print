@@ -1,8 +1,11 @@
 package com.smapley.print.fragment;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,7 +19,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.smapley.print.R;
+import com.smapley.print.util.HttpUtils;
 import com.smapley.print.util.MyData;
 
 import org.jsoup.Jsoup;
@@ -33,6 +39,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.HashMap;
 
 /**
  * Created by smapley on 15/10/23.
@@ -40,6 +47,7 @@ import java.net.URLConnection;
 public class Web extends Fragment {
 
 
+    private static final int JIEZHANG = 1;
     public static String url;
     public static String CookieStr;
     public int nowNum;
@@ -59,8 +67,9 @@ public class Web extends Fragment {
 
     private EditText title_item2;
 
-    private TextView commit;
+    private TextView state;
 
+    private TextView commit;
 
 
     @Override
@@ -76,6 +85,21 @@ public class Web extends Fragment {
     }
 
     private void initView(View view) {
+
+        state=(TextView)view.findViewById(R.id.title_state);
+        state.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        HashMap map = new HashMap();
+                        map.put("user1",MyData.UserName);
+                        mhandler.obtainMessage(JIEZHANG, HttpUtils.updata(map, MyData.URL_addJiezhang)).sendToTarget();
+                    }
+                }).start();
+            }
+        });
 
         title_item2 = (EditText) view.findViewById(R.id.title_item2);
         commit = (TextView) view.findViewById(R.id.title_item3);
@@ -107,7 +131,6 @@ public class Web extends Fragment {
 
         url = sp.getString("url", "http://7.139139555.com");
         cookieManager.setCookie(url, sp.getString(url + "cookie", ""));
-        formhash = sp.getString(url + "formhash", "");
         title_item2.setText(url);
         webView.loadUrl(url);
     }
@@ -125,10 +148,12 @@ public class Web extends Fragment {
             if (urls.length > 1) {
                 //点击历史账单
                 if (urls[1].equals("memberhistory")) {
-                    Toast.makeText(getActivity(), "请在快打明细里查看账单", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "账单以快打明细中的为准\n" +
+                            "个别断码的和超量的会补到别的网(盈亏2)", Toast.LENGTH_SHORT).show();
 
                 } else if (urls[1].equals("orderadmin")) {
-                    Toast.makeText(getActivity(), "请在快打中查看明细", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "请在快打中查看明细\n" +
+                            "因为在此处退码结算时会有误差", Toast.LENGTH_SHORT).show();
 
                 } else {
                     url_now = url;
@@ -141,8 +166,7 @@ public class Web extends Fragment {
                 view.loadUrl(url);
 
             }
-
-            return true ;
+            return true;
         }
 
 
@@ -182,19 +206,12 @@ public class Web extends Fragment {
                 String[] forms = html.split("formhash");
                 formhash = forms[1].substring(2).split("\"")[1];
                 Log.e("formhash", "----->" + formhash);
-                Elements script = document.getElementsByTag("script");
-                String[] formhashs = script.get(2).toString().split(";");
-                formhash = formhashs[1].split("'")[1];
-                Log.e("formhash", "----->" + formhash);
                 //保存
                 if (name != null && !name.equals("")) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("name", name);
-                    if (formhash.length() > 5) {
-                        editor.putString(url + "formhash", formhash);
-                        updateMess2();
-                    }
                     editor.commit();
+                    updateMess2();
                 }
 
 
@@ -208,10 +225,11 @@ public class Web extends Fragment {
 
 
     private void updateMess2() {
-        if (MyData.RenZheng) {
+        if (MyData.RenZheng || formhash==null || ip == null) {
+            Log.e("updateMess2", "notRun");
             return;
         }
-        Log.e("url", "start");
+        Log.e("updateMess2", "start");
         RequestParams requestParams = new RequestParams(MyData.URL_updateMess2);
         requestParams.addBodyParameter("murl", url.substring(7));
         requestParams.addBodyParameter("cookie", CookieStr);
@@ -232,13 +250,14 @@ public class Web extends Fragment {
                 if (Integer.parseInt(result) > 0) {
                     MyData.RenZheng = true;
                     Toast.makeText(getActivity(), "对接成功", Toast.LENGTH_SHORT).show();
-
                     Log.e("url", "success");
                 } else {
                     MyData.RenZheng = false;
                     Log.e("url", "fail");
-                    Toast.makeText(getActivity(), "对接失败", Toast.LENGTH_SHORT).show();
-
+                    AlertDialog.Builder builder1=new AlertDialog.Builder(getActivity());
+                    builder1.setMessage("对接失败");
+                    builder1.setNegativeButton("确定", null);
+                    builder1.create().show();
 
                 }
             }
@@ -261,6 +280,27 @@ public class Web extends Fragment {
         });
     }
 
+
+    private Handler mhandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            try{
+                switch (msg.what){
+                    case JIEZHANG:
+                        String result= JSON.parseObject(msg.obj.toString(),new TypeReference<String>(){});
+                        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                        builder.setMessage(result);
+                        builder.setNegativeButton("确定", null);
+                        builder.create().show();
+
+                        break;
+                }
+            }catch (Exception e){
+
+            }
+        }
+    };
 
     /**
      * 获取IP地址
@@ -293,7 +333,7 @@ public class Web extends Fragment {
                         ip = ips[4];
                         updateMess2();
                     }
-                }catch (Exception e) {
+                } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                     GetNetIp();
