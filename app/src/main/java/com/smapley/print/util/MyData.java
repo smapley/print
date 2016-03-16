@@ -11,6 +11,7 @@ public class MyData {
     public static String PassWord;
     public static String Ming;
     public static boolean Login = false;
+    public static Boolean RenZheng = false;
 
     private static final String BASE_URL = "http://120.25.208.188/dayin/";
     public static final String URL_INDEX1 = BASE_URL + "xiazhuX1.php";
@@ -32,6 +33,7 @@ public class MyData {
     public static final String URL_DELTINGYA =BASE_URL+"delTingya.php";
     public static final String URL_GETPEILV =BASE_URL+"getPeilv.php";
     public static final String URL_updateMess2 =BASE_URL+"updateMess2.php";
+    public static final String URL_chongfu =BASE_URL+"chongfu.php";
 
     /**
      * 获取服务器加密码

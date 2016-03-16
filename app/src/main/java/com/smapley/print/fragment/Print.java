@@ -83,6 +83,7 @@ public class Print extends Fragment implements View.OnClickListener {
     private TextView keyitem13;
     private TextView keyitem14;
     private TextView keyitem15;
+    private List<TextView> keyList=new ArrayList<>();
     private TextView tag;
     private TextView xiane;
     private final int UPDATA = -1;
@@ -280,6 +281,21 @@ public class Print extends Fragment implements View.OnClickListener {
         keyitem13 = (TextView) view.findViewById(R.id.key_item13);
         keyitem14 = (TextView) view.findViewById(R.id.key_item14);
         keyitem15 = (TextView) view.findViewById(R.id.key_item15);
+        keyList.add(keyitem1);
+        keyList.add(keyitem2);
+        keyList.add(keyitem3);
+        keyList.add(keyitem4);
+        keyList.add(keyitem5);
+        keyList.add(keyitem6);
+        keyList.add(keyitem7);
+        keyList.add(keyitem8);
+        keyList.add(keyitem9);
+        keyList.add(keyitem10);
+        keyList.add(keyitem11);
+        keyList.add(keyitem12);
+        keyList.add(keyitem13);
+        keyList.add(keyitem14);
+        keyList.add(keyitem15);
         tag = (TextView) view.findViewById(R.id.text_tag);
         xiane=(TextView)view.findViewById(R.id.text_xiane);
 
@@ -376,7 +392,9 @@ public class Print extends Fragment implements View.OnClickListener {
         jine = tag;
         keybord.setVisibility(View.VISIBLE);
         ((MainActivity) getActivity()).bottom.setVisibility(View.GONE);
-        keybord.setBackgroundResource(R.color.back2);
+        for (TextView textView:keyList){
+            textView.setBackgroundResource(R.drawable.blue_select);
+        }
         numCart.setVisibility(View.GONE);
         jinCart.setVisibility(View.VISIBLE);
         listView.smoothScrollToPosition(adapter.getCount() - 1);
@@ -395,7 +413,9 @@ public class Print extends Fragment implements View.OnClickListener {
         nowText.setText(text);
         keybord.setVisibility(View.VISIBLE);
         ((MainActivity) getActivity()).bottom.setVisibility(View.GONE);
-        keybord.setBackgroundResource(R.color.bac1);
+        for (TextView textView:keyList){
+            textView.setBackgroundResource(R.drawable.red_select);
+        }
         numCart.setVisibility(View.VISIBLE);
         jinCart.setVisibility(View.GONE);
         listView.smoothScrollToPosition(adapter.getCount() - 1);

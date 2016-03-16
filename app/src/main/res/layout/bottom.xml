@@ -9,18 +9,23 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_weight="1"
+        android:background="@drawable/chengse_select"
         android:gravity="center"
         android:text="快打"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/bottom_item2"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_weight="1"
+        android:background="@drawable/chengse_select"
         android:gravity="center"
         android:text="快选"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -29,18 +34,23 @@
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_weight="1"
+        android:background="@drawable/chengse_select"
         android:gravity="center"
-        android:text="资料"
+        android:text="网页"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/bottom_item4"
         android:layout_width="0dp"
         android:layout_height="50dp"
         android:layout_weight="1"
+        android:background="@drawable/chengse_select"
         android:gravity="center"
         android:text="设置"
+        android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold" />
 

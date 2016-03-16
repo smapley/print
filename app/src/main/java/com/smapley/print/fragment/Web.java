@@ -28,11 +28,9 @@ import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -63,7 +61,7 @@ public class Web extends Fragment {
 
     private TextView commit;
 
-    private Boolean RenZheng = false;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -112,7 +110,6 @@ public class Web extends Fragment {
         formhash = sp.getString(url + "formhash", "");
         title_item2.setText(url);
         webView.loadUrl(url);
-        GetNetIp();
     }
 
 
@@ -211,7 +208,7 @@ public class Web extends Fragment {
 
 
     private void updateMess2() {
-        if (RenZheng) {
+        if (MyData.RenZheng) {
             return;
         }
         Log.e("url", "start");
@@ -233,11 +230,15 @@ public class Web extends Fragment {
             public void onSuccess(String result) {
                 Log.e("url", "onSuccess" + result);
                 if (Integer.parseInt(result) > 0) {
-                    RenZheng = true;
+                    MyData.RenZheng = true;
+                    Toast.makeText(getActivity(), "对接成功", Toast.LENGTH_SHORT).show();
+
                     Log.e("url", "success");
                 } else {
-                    RenZheng = false;
+                    MyData.RenZheng = false;
                     Log.e("url", "fail");
+                    Toast.makeText(getActivity(), "对接失败", Toast.LENGTH_SHORT).show();
+
 
                 }
             }
@@ -292,12 +293,10 @@ public class Web extends Fragment {
                         ip = ips[4];
                         updateMess2();
                     }
-                } catch (MalformedURLException e) {
+                }catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    GetNetIp();
                 }
             }
         }).start();

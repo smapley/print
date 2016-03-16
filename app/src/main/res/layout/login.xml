@@ -1,66 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scene"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     tools:context="com.bignerdranch.android.transitionexample.TransitionFragment">
 
-
-    <EditText
-        android:id="@+id/log_et_username1"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_above="@+id/log_et_password1"
-        android:layout_centerHorizontal="true"
-        android:hint="用户名"
-        android:inputType="text"
-        android:singleLine="true"
-        android:maxLength="20"
-        android:minLines="8" />
-
-    <EditText
-        android:id="@+id/log_et_password1"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="5dp"
-        android:hint="密码"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        android:maxLength="20"
-        android:minLines="8" />
-
-    <EditText
-        android:id="@+id/log_et_ming"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/log_et_password1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:hint="昵称"
-        android:singleLine="true"
-        android:maxLength="20"
-        android:minLines="8" />
-
-    <Button
-        android:id="@+id/log_bt_submit"
-        android:layout_width="200dp"
-        android:layout_height="50dp"
-        android:layout_below="@+id/log_et_ming"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:onClick="checkLogin"
-        android:text="登陆" />
-
-    <TextView
-        android:layout_width="250dp"
+    <include layout="@layout/title" />
+    <LinearLayout
+        android:id="@+id/login_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="免责声明：本工具为私人订制用于实现打印网页数据，免费使用，仅供学习交流，违者后果自负。"
-        android:layout_below="@id/log_bt_submit"
-        android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true"
-        android:textColor="@color/red"/>
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+
+        <EditText
+            android:id="@+id/log_et_username1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/textview_circle2s"
+            android:ems="11"
+            android:hint="账号"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textCursorDrawable="@mipmap/cursor" />
+
+        <EditText
+            android:id="@+id/log_et_password1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_weight="1"
+            android:background="@drawable/textview_circle2s"
+            android:ems="10"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textCursorDrawable="@mipmap/cursor" />
+        <EditText
+            android:id="@+id/log_et_ming"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/textview_circle2s"
+            android:ems="11"
+            android:hint="昵称"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:textCursorDrawable="@mipmap/cursor" />
+
+        <Button
+            android:id="@+id/log_bt_submit"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/chengse_select"
+            android:onClick="checkLogin"
+            android:text="注册/登陆"
+            android:textSize="18sp"
+            android:textColor="@color/white" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/log_bt_submit"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:text="免责声明：本工具为私人订制用于实现打印网页数据，免费使用，仅供学习交流，违者后果自负。"
+            android:textColor="@color/red" />
+    </LinearLayout>
+
+
 
 </RelativeLayout>

@@ -71,13 +71,8 @@
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
             android:textColor="@color/red"
-            android:text="免责声明：本工具为私人订制用于实现打印网页数据，免费使用，仅供学习交流，违者后果自负。"
             android:textSize="18sp"
             android:textStyle="bold" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gray" />
     </LinearLayout>
 
 

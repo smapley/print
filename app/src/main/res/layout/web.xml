@@ -6,7 +6,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginLeft="5dp">
+        android:background="@drawable/toubu"
+        android:paddingLeft="5dp">
 
 
         <EditText
@@ -15,7 +16,7 @@
             android:layout_height="50dp"
             android:maxLines="1"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:singleLine="true"
             android:lines="1"
@@ -26,9 +27,9 @@
             android:layout_width="70dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:layout_marginRight="10dp"
+            android:background="@drawable/chengse_select"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:text="前往"
             android:textSize="18sp"/>
 

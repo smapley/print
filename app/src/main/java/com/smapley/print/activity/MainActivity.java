@@ -34,8 +34,7 @@ import com.smapley.print.print.WorkService;
 import com.smapley.print.util.CustomViewPager;
 import com.smapley.print.util.HttpUtils;
 import com.smapley.print.util.MyData;
-
-import org.xutils.x;
+import com.smapley.print.util.ThreadSleep;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -80,7 +79,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static int position = 1;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +97,16 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         initViewPage();
         initPrint();
 
+
+        new ThreadSleep().isLoop().sleep(180000, new ThreadSleep.Callback() {
+            @Override
+            public void onCallback(ThreadSleep threadSleep, int number) {
+                HashMap map = new HashMap();
+                map.put("user1", MyData.UserName);
+                if (MyData.RenZheng)
+                    HttpUtils.updata(map, MyData.URL_chongfu);
+            }
+        });
     }
 
     private void initView() {
@@ -123,7 +131,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         fragmentList = new ArrayList<>();
         set = new Set();
         chose = new Chose();
-        web=new Web();
+        web = new Web();
         print = new Print();
         fragmentList.add(print);
         fragmentList.add(chose);
@@ -178,10 +186,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         viewPager.setCurrentItem(num);
     }
+
     private void changeTitle(String title2) {
         chose.settitle(title2);
         set.settitle(title2);
     }
+
     private void initPrint() {
         // 初始化字符串资源
         InitGlobalString();
@@ -209,8 +219,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public void connectBT() {
         try {
             String address = sp_user.getString("address", "");
-            if (address != null && !address.isEmpty() ) {
-                if(!WorkService.workThread.isConnected()) {
+            if (address != null && !address.isEmpty()) {
+                if (!WorkService.workThread.isConnected()) {
                     BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
                     if (null != adapter) {
                         if (adapter.isEnabled()) {
@@ -229,7 +239,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     }
                 }
 
-            }else{
+            } else {
                 Toast.makeText(MainActivity.this, "请先手动连接一次打印机！", Toast.LENGTH_SHORT).show();
 
             }
@@ -498,7 +508,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     try {
                         dialog.dismiss();
                         Detail.dialog.dismiss();
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                     int result = msg.arg1;
@@ -562,7 +572,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
     }
-
 
 
     @Override

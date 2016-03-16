@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -29,6 +30,8 @@ public class Login extends Activity {
     private String log_st_usernmae;
     private String log_st_password;
     private String log_st_ming;
+
+    private TextView title_item2;
 
     private boolean isLogin = false;
     private SharedPreferences sp_user;
@@ -64,6 +67,8 @@ public class Login extends Activity {
 
     protected void initParams() {
 
+        title_item2=(TextView)findViewById(R.id.title_item2);
+        title_item2.setText("登陆");
 
         log_et_username = (EditText) findViewById(R.id.log_et_username1);
         log_et_password = (EditText) findViewById(R.id.log_et_password1);
