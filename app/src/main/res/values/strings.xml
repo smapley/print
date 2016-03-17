@@ -60,6 +60,7 @@ t    <string name="main_item2">首页</string>
     <string name="toast_usbpermit">Please permit app use usb and reclick this button</string>
     <string name="tingya">清空</string>
     <string name="delect">退码</string>
+    <string name="internet_err">网络不给力！</string>
 
 
 </resources>

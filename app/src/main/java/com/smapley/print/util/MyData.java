@@ -35,6 +35,7 @@ public class MyData {
     public static final String URL_updateMess2 =BASE_URL+"updateMess2.php";
     public static final String URL_chongfu =BASE_URL+"chongfu.php";
     public static final String URL_addJiezhang =BASE_URL+"addJiezhang.php";
+    public static final String URL_reggaimi =BASE_URL+"reggaimi.php";
 
     /**
      * 获取服务器加密码

@@ -25,7 +25,6 @@ public class LocalApplication extends Application {
         //初始化xUtils
         x.Ext.init(this);
         x.Ext.setDebug(BuildConfig.DEBUG);
-
         instance = this;
     }
 }

@@ -49,6 +49,8 @@
             android:name="com.smapley.print.activity.NumList"
             android:windowSoftInputMode="adjustResize" />
 
+        <activity android:name=".activity.Gaimi"/>
+
         <service android:name="com.smapley.print.print.WorkService" />
 
     </application>

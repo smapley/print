@@ -80,7 +80,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     public static int position = 1;
 
     public static int chongfuNum = 0;
-
+    public static MainActivity mainActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +108,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                     chongfu();
             }
         });
+        mainActivity=this;
     }
 
     private void chongfu() {
@@ -632,5 +633,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         super.onBackPressed();
         finish();
     }
-
+    public static void stop(){
+        mainActivity.finish();
+    }
 }

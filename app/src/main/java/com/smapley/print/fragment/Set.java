@@ -20,12 +20,12 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.smapley.print.R;
+import com.smapley.print.activity.Gaimi;
 import com.smapley.print.activity.Login;
 import com.smapley.print.activity.SearchBTActivity;
 import com.smapley.print.util.HttpUtils;
 import com.smapley.print.util.MyData;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -40,6 +40,7 @@ public class Set extends Fragment {
     private static final int GETVERSION = 1;
     private TextView item1;
     private TextView item2;
+    private TextView item3;
     private TextView item4;
     private TextView menu1;
 
@@ -60,6 +61,7 @@ public class Set extends Fragment {
 
         item1 = (TextView) view.findViewById(R.id.set_item1);
         item2 = (TextView) view.findViewById(R.id.set_item2);
+        item3 = (TextView) view.findViewById(R.id.set_item3);
         item4 = (TextView) view.findViewById(R.id.set_item4);
 
         item1.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +86,13 @@ public class Set extends Fragment {
             }
         });
 
+        item3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getActivity(),Gaimi.class));
+            }
+        });
+
         item4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,16 +103,7 @@ public class Set extends Fragment {
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                HashMap map = new HashMap();
-                                map.put("user1",MyData.UserName);
-                                mhandler.obtainMessage(LOGOUT,HttpUtils.updata(map,MyData.URL_Reg2)).sendToTarget();
-                            }
-                        }).start();
-
+                        mhandler.obtainMessage(LOGOUT).sendToTarget();
                     }
                 });
                 builder.create().show();
