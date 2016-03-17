@@ -78,9 +78,9 @@ public class PrintAdapter extends BaseAdapter {
             viewHolder.gold.setTextColor(Color.BLACK);
             viewHolder.pei.setTextColor(Color.BLACK);
             viewHolder.num.setText(map.get("number") + "(" + (list.size() - 1) + ")");
-            int total = 0;
+            double total = 0;
             for (int i=1;i<list.size();i++) {
-                total = total + Integer.parseInt(list.get(i).get("gold").toString());
+                total = total + Double.parseDouble(list.get(i).get("gold").toString());
             }
             viewHolder.gold.setText(map.get("gold") + "(" + (total) + ")");
             viewHolder.pei.setText(map.get("pei"));
