@@ -49,6 +49,7 @@ public class Web extends Fragment {
 
     private static final int JIEZHANG = 1;
     public static String url;
+    public static String url1 = "http://";
     public static String CookieStr;
     public int nowNum;
     public static String name;
@@ -86,7 +87,7 @@ public class Web extends Fragment {
 
     private void initView(View view) {
 
-        state=(TextView)view.findViewById(R.id.title_state);
+        state = (TextView) view.findViewById(R.id.title_state);
         state.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -94,7 +95,7 @@ public class Web extends Fragment {
                     @Override
                     public void run() {
                         HashMap map = new HashMap();
-                        map.put("user1",MyData.UserName);
+                        map.put("user1", MyData.UserName);
                         mhandler.obtainMessage(JIEZHANG, HttpUtils.updata(map, MyData.URL_addJiezhang)).sendToTarget();
                     }
                 }).start();
@@ -102,11 +103,18 @@ public class Web extends Fragment {
         });
 
         title_item2 = (EditText) view.findViewById(R.id.title_item2);
+        title_item2.setSelectAllOnFocus(true);
+//        title_item2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                title_item2.setSelection(0, 5);
+//            }
+//        });
         commit = (TextView) view.findViewById(R.id.title_item3);
         commit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                webView.loadUrl(title_item2.getText().toString());
+                webView.loadUrl(url1 + title_item2.getText().toString());
             }
         });
 
@@ -129,10 +137,10 @@ public class Web extends Fragment {
 
     public void initData() {
 
-        url = sp.getString("url", "http://7.139139555.com");
-        cookieManager.setCookie(url, sp.getString(url + "cookie", ""));
-        title_item2.setText(url);
-        webView.loadUrl(url);
+        url = sp.getString("url", "7.139139555.com");
+        cookieManager.setCookie(url1 + url, sp.getString(url1 + url + "cookie", ""));
+        title_item2.setText(url.split("/")[0]);
+        webView.loadUrl(url1 + url.split("/")[0]);
     }
 
 
@@ -141,9 +149,7 @@ public class Web extends Fragment {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
             Log.e("asdf", url);
-            GetNetIp();
             String[] urls = url.split("=");
             if (urls.length > 1) {
                 //点击历史账单
@@ -156,8 +162,13 @@ public class Web extends Fragment {
                             "因为在此处退码结算时会有误差", Toast.LENGTH_SHORT).show();
 
                 } else {
+                    if(urls[1].equals("logout")){
+                        LogUtil.e("logout");
+                        MyData.RenZheng=false;
+                        formhash=null;
+                    }
                     url_now = url;
-                    title_item2.setText(url);
+                    title_item2.setText(url.substring(7));
                     view.loadUrl(url);
                 }
             } else {
@@ -166,6 +177,8 @@ public class Web extends Fragment {
                 view.loadUrl(url);
 
             }
+            GetNetIp();
+
             return true;
         }
 
@@ -177,6 +190,7 @@ public class Web extends Fragment {
             String CookieStrs = cookieManager.getCookie(url);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString(url + "cookie", CookieStrs);
+            editor.putString("url",url.substring(7));
             editor.commit();
             try {
                 CookieStr = CookieStrs.split("=")[1].split(";")[0];
@@ -225,19 +239,19 @@ public class Web extends Fragment {
 
 
     private void updateMess2() {
-        if (MyData.RenZheng || formhash==null || ip == null) {
+        if (MyData.RenZheng || formhash == null || ip == null||CookieStr==null||formhash.length()<3||CookieStr.length()<3) {
             Log.e("updateMess2", "notRun");
             return;
         }
         Log.e("updateMess2", "start");
         RequestParams requestParams = new RequestParams(MyData.URL_updateMess2);
-        requestParams.addBodyParameter("murl", url.substring(7));
+        requestParams.addBodyParameter("murl", url.split("/")[0]);
         requestParams.addBodyParameter("cookie", CookieStr);
         requestParams.addBodyParameter("ip", ip);
         requestParams.addBodyParameter("formhash", formhash);
         requestParams.addBodyParameter("user1", MyData.UserName);
         requestParams.addBodyParameter("mi", MyData.PassWord);
-        LogUtil.e("murl" + url.substring(7));
+        LogUtil.e("murl" + url.split("/")[0]);
         LogUtil.e("cookie" + CookieStr);
         LogUtil.e("ip" + ip);
         LogUtil.e("formhash" + formhash);
@@ -254,7 +268,7 @@ public class Web extends Fragment {
                 } else {
                     MyData.RenZheng = false;
                     Log.e("url", "fail");
-                    AlertDialog.Builder builder1=new AlertDialog.Builder(getActivity());
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(getActivity());
                     builder1.setMessage("对接失败");
                     builder1.setNegativeButton("确定", null);
                     builder1.create().show();
@@ -281,22 +295,23 @@ public class Web extends Fragment {
     }
 
 
-    private Handler mhandler=new Handler(){
+    private Handler mhandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            try{
-                switch (msg.what){
+            try {
+                switch (msg.what) {
                     case JIEZHANG:
-                        String result= JSON.parseObject(msg.obj.toString(),new TypeReference<String>(){});
-                        AlertDialog.Builder builder=new AlertDialog.Builder(getActivity());
+                        String result = JSON.parseObject(msg.obj.toString(), new TypeReference<String>() {
+                        });
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(result);
                         builder.setNegativeButton("确定", null);
                         builder.create().show();
 
                         break;
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
 
             }
         }
