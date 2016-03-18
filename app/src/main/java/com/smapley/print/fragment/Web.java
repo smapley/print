@@ -51,7 +51,7 @@ public class Web extends Fragment {
     public static String url;
     public static String url1 = "http://";
     public static String CookieStr;
-    public Double nowNum;
+    public int nowNum;
     public static String name;
     public static String qihao;
     public static String ip;
@@ -211,7 +211,7 @@ public class Web extends Fragment {
                 Elements body = document.getElementsByTag("body");
                 Elements span = body.get(0).getElementsByTag("span");
                 String[] num = span.get(1).text().split(":");
-                nowNum = Double.parseDouble(num[3]);
+                nowNum = Integer.parseInt(num[3]);
                 Log.e("nowNum", "nowNum======>>" + nowNum);
                 name = num[1].substring(0, num[1].length() - 3);
                 Log.e("name", "name======>>" + name);
@@ -230,7 +230,7 @@ public class Web extends Fragment {
 
 
             } catch (Exception e) {
-                e.printStackTrace();
+
             }
 
 
