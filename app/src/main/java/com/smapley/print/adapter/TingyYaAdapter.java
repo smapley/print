@@ -65,6 +65,7 @@ public class TingyYaAdapter extends BaseAdapter {
                 viewHolder.num.setTextColor(Color.BLACK);
             }
         }catch (Exception e){
+            e.printStackTrace();
         }
         return convertView;
     }

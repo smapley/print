@@ -89,8 +89,7 @@ public class Detail extends Activity {
     private String qishu;
 
     private static CheckBox checkBox;
-    private LinearLayout lin2;
-    private LinearLayout lin2s;
+    private TextView checkBoxs;
 
     public static List<Map> removeList = new ArrayList<>();
     private TextView delect;
@@ -164,8 +163,7 @@ public class Detail extends Activity {
     private void initView() {
 
         checkBox = (CheckBox) findViewById(R.id.details_check);
-        lin2=(LinearLayout)findViewById(R.id.lin2);
-        lin2s=(LinearLayout)findViewById(R.id.lin2s);
+        checkBoxs = (TextView) findViewById(R.id.details_check2);
         delect = (TextView) findViewById(R.id.detail_delect);
 
         delect.setOnClickListener(new View.OnClickListener() {
@@ -363,8 +361,8 @@ public class Detail extends Activity {
                 now_item = 1;
                 layout1.setVisibility(View.VISIBLE);
                 layout2.setVisibility(View.INVISIBLE);
-                lin2.setVisibility(View.VISIBLE);
-                lin2s.setVisibility(View.GONE);
+                checkBox.setVisibility(View.VISIBLE);
+                checkBoxs.setVisibility(View.GONE);
                 listView.setAdapter(adapter1);
                 item1.setTextColor(getResources().getColor(R.color.blue));
                 item2.setTextColor(getResources().getColor(R.color.black));
@@ -378,8 +376,8 @@ public class Detail extends Activity {
                 now_item = 2;
                 layout1.setVisibility(View.VISIBLE);
                 layout2.setVisibility(View.INVISIBLE);
-                lin2.setVisibility(View.GONE);
-                lin2s.setVisibility(View.VISIBLE);
+                checkBox.setVisibility(View.GONE);
+                checkBoxs.setVisibility(View.VISIBLE);
                 listView.setAdapter(adapter2);
                 item1.setTextColor(getResources().getColor(R.color.black));
                 item2.setTextColor(getResources().getColor(R.color.blue));
@@ -456,6 +454,19 @@ public class Detail extends Activity {
                     case GETDATA2:
                         list2 = JSON.parseObject(msg.obj.toString(), new TypeReference<List<Map<String, String>>>() {
                         });
+                        for (int i = 0; i < list2.size(); i++) {
+                            switch (Integer.parseInt(list2.get(i).get("zt").toString())) {
+                                case 0:
+                                    list2.get(i).put("zt", "未打印");
+                                    break;
+                                case 1:
+                                    list2.get(i).put("zt", "已打印");
+                                    break;
+                                case 9:
+                                    list2.get(i).put("zt", "已退码");
+                                    break;
+                            }
+                        }
                         if (list2.size() > 100) {
                             list2_now = list2.subList(0, 100);
                         } else {

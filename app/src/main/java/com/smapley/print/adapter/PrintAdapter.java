@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.smapley.print.R;
 import com.smapley.print.fragment.Print;
 
-import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +25,6 @@ public class PrintAdapter extends BaseAdapter {
     private List<Map<String, String>> list;
     private LayoutInflater inflater;
     private Context context;
-    private DecimalFormat df   = new DecimalFormat("######0.0");
 
     public PrintAdapter(Context context, List<Map<String, String>> list) {
         this.list = list;
@@ -84,7 +82,7 @@ public class PrintAdapter extends BaseAdapter {
             for (int i=1;i<list.size();i++) {
                 total = total + Double.parseDouble(list.get(i).get("gold").toString());
             }
-            viewHolder.gold.setText(map.get("gold") + "(" + (df.format(total)) + ")");
+            viewHolder.gold.setText(map.get("gold") + "(" + (total) + ")");
             viewHolder.pei.setText(map.get("pei"));
         } else {
             viewHolder.num.setTextColor(context.getResources().getColor(R.color.green));

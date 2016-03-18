@@ -14,23 +14,19 @@
 
         <TextView
             android:id="@+id/detail_item_num"
-            style="@style/data_text"
-            android:textColor="@color/black"/>
+            style="@style/data_text" />
 
         <TextView
             android:id="@+id/detail_item_gold"
-            style="@style/data_text"
-            android:textColor="@color/black"/>
+            style="@style/data_text" />
 
         <TextView
             android:id="@+id/detail_item_pei"
-            style="@style/data_text"
-            android:textColor="@color/black"/>
+            style="@style/data_text" />
 
         <TextView
             android:id="@+id/detail_item_zt"
-            style="@style/data_text"
-            android:textColor="@color/black"/>
+            style="@style/data_text" />
     </LinearLayout>
 
     <TextView
