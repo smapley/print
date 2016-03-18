@@ -620,7 +620,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
+        if (resultCode ==2) {
             viewPagerGo(0);
             position = 1;
             String result = data.getStringExtra("data");

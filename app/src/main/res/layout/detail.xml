@@ -151,11 +151,6 @@
                     android:gravity="left|center_vertical"
                     android:text="号码" />
 
-                <TextView
-                    android:id="@+id/details_check2"
-                    style="@style/data_text1"
-                    android:text="号码"
-                    android:visibility="gone" />
 
                 <TextView
                     style="@style/data_text1"
@@ -171,6 +166,34 @@
                     style="@style/data_text1"
                     android:layout_weight="0.8"
                     android:text="状态" />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/lin2s"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_vertical"
+                android:visibility="gone">
+
+
+                <TextView
+                    style="@style/data_text1"
+                    android:text="号码" />
+
+                <TextView
+                    style="@style/data_text1"
+                    android:layout_weight="0.5"
+                    android:text="盈亏1" />
+
+                <TextView
+                    style="@style/data_text1"
+                    android:layout_weight="0.8"
+                    android:text="盈亏2" />
+
+                <TextView
+                    style="@style/data_text1"
+                    android:layout_weight="0.8"
+                    android:text="赔率" />
             </LinearLayout>
 
             <TextView
